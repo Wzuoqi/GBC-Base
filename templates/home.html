@@ -1,0 +1,570 @@
+{% extends "base.html" %}
+
+{% block Part1 %}
+{% load static %}
+
+<div class="relative min-h-screen overflow-hidden">
+    <!-- 固定背景图片 -->
+    <div class="fixed inset-0 -z-10">
+        <img src="{% static 'img/home_cover.jpg' %}" alt="Background" class="w-full h-full object-cover">
+        <!-- 渐变遮罩层 -->
+        <div class="absolute inset-0 bg-gradient-to-b from-horizon-900/10 via-horizon-800/25 to-horizon-700/40"></div>
+    </div>
+
+    <!-- 波浪动效 -->
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="wave-container">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+    </div>
+
+    <!-- 主要内容区域 -->
+    <div class="relative min-h-screen flex flex-col items-center justify-center text-center px-4">
+        <!-- 标题区域 -->
+        <div class="relative z-10 space-y-8">
+            <!-- 装饰线条 -->
+            <div class="absolute w-32 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent -top-8 left-1/2 transform -translate-x-1/2"></div>
+
+            <!-- 主标题 -->
+            <h1 class="text-7xl font-bold text-white mb-4 tracking-tight drop-shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                GBC-Base
+            </h1>
+
+            <!-- 副标题 -->
+            <div class="flex items-center justify-center gap-3 mb-16">
+                <span class="icon-[carbon--carbon-for-ibm-product] w-6 h-6 text-white/80"></span>
+                <p class="text-2xl text-white/90 font-light tracking-wide">
+                    Global Blue Carbon Meta Base
+                </p>
+                <span class="icon-[carbon--carbon-for-ibm-product] w-6 h-6 text-white/80"></span>
+            </div>
+
+            <!-- 数据统计 -->
+            <div class="grid grid-cols-5 gap-6 mt-16 max-w-6xl mx-auto">
+                <!-- Amplicons -->
+                <div class="stat-item">
+                    <span class="icon-[ic--baseline-biotech] w-8 h-8 text-white/70 mx-auto mb-3"></span>
+                    <div class="text-3xl font-bold text-white counter" data-target="9606">0</div>
+                    <div class="text-sm text-white/80 mt-2 font-medium tracking-wide">Amplicons</div>
+                </div>
+                <!-- Metagenomes -->
+                <div class="stat-item">
+                    <span class="icon-[carbon--assembly-cluster] w-8 h-8 text-white/70 mx-auto mb-3"></span>
+                    <div class="text-3xl font-bold text-white counter" data-target="1038">0</div>
+                    <div class="text-sm text-white/80 mt-2 font-medium tracking-wide">Metagenomes</div>
+                </div>
+                <!-- Environment Factor -->
+                <div class="stat-item">
+                    <span class="icon-[material-symbols--eco-outline] w-8 h-8 text-white/70 mx-auto mb-3"></span>
+                    <div class="text-3xl font-bold text-white counter" data-target="26845">0</div>
+                    <div class="text-sm text-white/80 mt-2 font-medium tracking-wide">Environment Factor</div>
+                </div>
+                <!-- Genome -->
+                <div class="stat-item">
+                    <span class="icon-[ph--dna-bold] w-8 h-8 text-white/70 mx-auto mb-3"></span>
+                    <div class="text-3xl font-bold text-white counter" data-target="2371">0</div>
+                    <div class="text-sm text-white/80 mt-2 font-medium tracking-wide">Genome</div>
+                </div>
+                <!-- Functional Microbe -->
+                <div class="stat-item">
+                    <span class="icon-[streamline--bacteria-virus-cells-biology] w-8 h-8 text-white/70 mx-auto mb-3"></span>
+                    <div class="text-3xl font-bold text-white counter" data-target="5122">0</div>
+                    <div class="text-sm text-white/80 mt-2 font-medium tracking-wide">Functional Microbe</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 向下滚动提示 -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <span class="icon-[material-symbols--keyboard-arrow-down-rounded] w-8 h-8 text-white/80"></span>
+        </div>
+    </div>
+
+    <!-- 滚动内容区域 -->
+    <div class="relative bg-white min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+            <!-- 标题部分 -->
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">
+                    Welcome to GBC-Base
+                </h2>
+                <p class="mt-4 text-lg text-gray-500">
+                    A comprehensive database for global blue carbon research.
+                </p>
+            </div>
+
+            <!-- Database Overview 部分 -->
+            <div class="mt-16">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <div class="lg:w-1/2 space-y-6">
+                        <h3 class="text-2xl font-semibold text-gray-900">Database Overview</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            GBC-Base is a comprehensive database dedicated to global blue carbon research. It integrates multi-omics data, environmental factors, and functional annotations from various marine ecosystems worldwide. Our database provides researchers with valuable insights into blue carbon processes, microbial communities, and their ecological roles.
+                        </p>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-center gap-2">
+                                <span class="icon-[ph--check-circle-bold] w-5 h-5 text-horizon-600"></span>
+                                Comprehensive collection of blue carbon related data
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="icon-[ph--check-circle-bold] w-5 h-5 text-horizon-600"></span>
+                                Integration of multi-omics data with environmental factors
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="icon-[ph--check-circle-bold] w-5 h-5 text-horizon-600"></span>
+                                Advanced analysis tools and visualization capabilities
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="lg:w-1/2">
+                        <div class="relative overflow-hidden rounded-lg shadow-lg">
+                            <!-- 轮播图容器 -->
+                            <div class="carousel-container">
+                                <!-- 轮播图片 -->
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide fade">
+                                        <img src="{% static 'img/overview/overview1.png' %}" alt="Database Overview 1"
+                                             class="w-full h-[380px] object-cover">
+                                    </div>
+                                    <div class="carousel-slide fade">
+                                        <img src="{% static 'img/overview/overview2.jpg' %}" alt="Database Overview 2"
+                                             class="w-full h-[380px] object-cover">
+                                    </div>
+                                    <div class="carousel-slide fade">
+                                        <img src="{% static 'img/overview/overview3.png' %}" alt="Database Overview 3"
+                                             class="w-full h-[380px] object-cover">
+                                    </div>
+                                </div>
+
+                                <!-- 轮播指示器 -->
+                                <div class="carousel-indicators absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                                    <button class="w-2 h-2 rounded-full bg-white/50 hover:bg-white/80 transition-colors duration-200"></button>
+                                    <button class="w-2 h-2 rounded-full bg-white/50 hover:bg-white/80 transition-colors duration-200"></button>
+                                    <button class="w-2 h-2 rounded-full bg-white/50 hover:bg-white/80 transition-colors duration-200"></button>
+                                </div>
+
+                                <!-- 渐变遮罩 -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Statistics 部分 -->
+            <div class="mt-24">
+                <!-- 标题部分改进 -->
+                <div class="text-center mb-16">
+                    <div class="inline-flex items-center justify-center">
+                        <div class="h-px w-8 bg-horizon-200"></div>
+                        <span class="mx-4 text-sm font-semibold text-horizon-600 uppercase tracking-wider">By The Numbers</span>
+                        <div class="h-px w-8 bg-horizon-200"></div>
+                    </div>
+                    <h3 class="mt-4 text-3xl font-bold text-gray-900">Data Statistics</h3>
+                    <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
+                        Comprehensive statistics of our growing database resources
+                    </p>
+                </div>
+
+                <!-- 统计卡片网格 -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <!-- 统计卡片 1 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="icon-[carbon--data-base] w-8 h-8 text-horizon-600"></span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-2xl font-bold text-gray-900">31,810</span>
+                            <span class="text-sm text-gray-500">Functional Records</span>
+                        </div>
+                    </div>
+                    <!-- 统计卡片 2 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="icon-[carbon--earth] w-8 h-8 text-horizon-600"></span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-2xl font-bold text-gray-900">1,250</span>
+                            <span class="text-sm text-gray-500">Sampling Sites</span>
+                        </div>
+                    </div>
+                    <!-- 统计卡片 3 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="icon-[carbon--research] w-8 h-8 text-horizon-600"></span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-2xl font-bold text-gray-900">1,038</span>
+                            <span class="text-sm text-gray-500">Metagenome</span>
+                        </div>
+                    </div>
+                    <!-- 统计卡片 4 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="icon-[carbon--data-enrichment] w-8 h-8 text-horizon-600"></span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-2xl font-bold text-gray-900">26,845</span>
+                            <span class="text-sm text-gray-500">Environmental Factors</span>
+                        </div>
+                    </div>
+                    <!-- 统计卡片 5 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="icon-[carbon--globe] w-8 h-8 text-horizon-600"></span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-2xl font-bold text-gray-900">9,602</span>
+                            <span class="text-sm text-gray-500">Amplicon</span>
+                        </div>
+                    </div>
+                    <!-- 统计卡片 6 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="icon-[carbon--chart-line] w-8 h-8 text-horizon-600"></span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-2xl font-bold text-gray-900">2,370</span>
+                            <span class="text-sm text-gray-500">Genome Catalog</span>
+                        </div>
+                    </div>
+                    <!-- 统计卡片 7 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="icon-[carbon--user-multiple] w-8 h-8 text-horizon-600"></span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-2xl font-bold text-gray-900">15,343,756</span>
+                            <span class="text-sm text-gray-500">Gene Catalog</span>
+                        </div>
+                    </div>
+                    <!-- 统计卡片 8 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="icon-[carbon--time] w-8 h-8 text-horizon-600"></span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-2xl font-bold text-gray-900">15,304</span>
+                            <span class="text-sm text-gray-500">Virus</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GBC-Base Main Functions 部分 -->
+            <div class="mt-24">
+                <!-- 标题部分改进 -->
+                <div class="text-center mb-16">
+                    <div class="inline-flex items-center justify-center">
+                        <div class="h-px w-8 bg-horizon-200"></div>
+                        <span class="mx-4 text-sm font-semibold text-horizon-600 uppercase tracking-wider">Explore Our Features</span>
+                        <div class="h-px w-8 bg-horizon-200"></div>
+                    </div>
+                    <h3 class="mt-4 text-3xl font-bold text-gray-900">GBC-Base Main Functions</h3>
+                    <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
+                        Powerful tools and features designed to help researchers analyze and visualize blue carbon data
+                    </p>
+                </div>
+
+                <!-- 功能卡片网格 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 功能卡片 1: Data Browser -->
+                    <div class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
+                            <img src="{% static 'img/features/data-browser.png' %}" alt="Data Browser"
+                                 class="object-cover object-center group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="flex items-center justify-center w-10 h-10 bg-horizon-50 rounded-lg">
+                                    <span class="icon-[carbon--search] w-5 h-5 text-horizon-600"></span>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-900">Data Browser</h4>
+                            </div>
+                            <p class="text-gray-600 mb-4">Browse and filter through our comprehensive collection of blue carbon data with advanced search capabilities.</p>
+                            <a href="#" class="inline-flex items-center text-sm font-medium text-horizon-600 hover:text-horizon-700">
+                                Learn more
+                                <span class="icon-[heroicons--arrow-right-20-solid] w-5 h-5 ml-1"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 功能卡片 2: Visualization Tools -->
+                    <div class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
+                            <img src="{% static 'img/features/visualization.png' %}" alt="Visualization Tools"
+                                 class="object-cover object-center group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="flex items-center justify-center w-10 h-10 bg-horizon-50 rounded-lg">
+                                    <span class="icon-[carbon--chart-relationship] w-5 h-5 text-horizon-600"></span>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-900">Visualization Tools</h4>
+                            </div>
+                            <p class="text-gray-600 mb-4">Create interactive visualizations to explore patterns and relationships in your data.</p>
+                            <a href="#" class="inline-flex items-center text-sm font-medium text-horizon-600 hover:text-horizon-700">
+                                Learn more
+                                <span class="icon-[heroicons--arrow-right-20-solid] w-5 h-5 ml-1"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 功能卡片 3: Geographic Analysis -->
+                    <div class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
+                            <img src="{% static 'img/features/geo-analysis.png' %}" alt="Geographic Analysis"
+                                 class="object-cover object-center group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="flex items-center justify-center w-10 h-10 bg-horizon-50 rounded-lg">
+                                    <span class="icon-[carbon--map] w-5 h-5 text-horizon-600"></span>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-900">Geographic Analysis</h4>
+                            </div>
+                            <p class="text-gray-600 mb-4">Explore spatial patterns and distribution of sampling sites on interactive maps.</p>
+                            <a href="#" class="inline-flex items-center text-sm font-medium text-horizon-600 hover:text-horizon-700">
+                                Learn more
+                                <span class="icon-[heroicons--arrow-right-20-solid] w-5 h-5 ml-1"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 功能卡片 4: Statistical Analysis -->
+                    <div class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
+                            <img src="{% static 'img/features/statistics.png' %}" alt="Statistical Analysis"
+                                 class="object-cover object-center group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="flex items-center justify-center w-10 h-10 bg-horizon-50 rounded-lg">
+                                    <span class="icon-[carbon--analytics] w-5 h-5 text-horizon-600"></span>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-900">Statistical Analysis</h4>
+                            </div>
+                            <p class="text-gray-600 mb-4">Perform advanced statistical analyses with our comprehensive suite of tools.</p>
+                            <a href="#" class="inline-flex items-center text-sm font-medium text-horizon-600 hover:text-horizon-700">
+                                Learn more
+                                <span class="icon-[heroicons--arrow-right-20-solid] w-5 h-5 ml-1"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 功能卡片 5: Data Download -->
+                    <div class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
+                            <img src="{% static 'img/features/download.png' %}" alt="Data Download"
+                                 class="object-cover object-center group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="flex items-center justify-center w-10 h-10 bg-horizon-50 rounded-lg">
+                                    <span class="icon-[carbon--download] w-5 h-5 text-horizon-600"></span>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-900">Data Download</h4>
+                            </div>
+                            <p class="text-gray-600 mb-4">Download datasets in various formats for offline analysis and research.</p>
+                            <a href="#" class="inline-flex items-center text-sm font-medium text-horizon-600 hover:text-horizon-700">
+                                Learn more
+                                <span class="icon-[heroicons--arrow-right-20-solid] w-5 h-5 ml-1"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 功能卡片 6: API Integration -->
+                    <div class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
+                            <img src="{% static 'img/features/api.png' %}" alt="API Integration"
+                                 class="object-cover object-center group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="flex items-center justify-center w-10 h-10 bg-horizon-50 rounded-lg">
+                                    <span class="icon-[carbon--api] w-5 h-5 text-horizon-600"></span>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-900">API Integration</h4>
+                            </div>
+                            <p class="text-gray-600 mb-4">Access our database programmatically through our comprehensive REST API.</p>
+                            <a href="#" class="inline-flex items-center text-sm font-medium text-horizon-600 hover:text-horizon-700">
+                                Learn more
+                                <span class="icon-[heroicons--arrow-right-20-solid] w-5 h-5 ml-1"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加所需的样式 -->
+<style>
+    /* 波浪动效 */
+    .wave-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .wave {
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+        border-radius: 43%;
+        animation: drift linear infinite;
+        transform-origin: 50% 48%;
+    }
+
+    .wave:nth-of-type(1) {
+        animation-duration: 20s;
+    }
+
+    .wave:nth-of-type(2) {
+        animation-duration: 25s;
+        opacity: 0.5;
+    }
+
+    .wave:nth-of-type(3) {
+        animation-duration: 30s;
+        opacity: 0.3;
+    }
+
+    @keyframes drift {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* 数据统计项样式 */
+    .stat-item {
+        @apply flex flex-col items-center justify-center p-4 rounded-lg
+        backdrop-blur-sm bg-white/5 hover:bg-white/10
+        transform hover:scale-105 transition-all duration-300;
+    }
+
+    .counter {
+        @apply tabular-nums;
+    }
+
+    /* 特征标签样式 */
+    .feature-tag {
+        @apply px-4 py-1 bg-white/10 backdrop-blur-sm rounded-full text-sm text-white/90
+        hover:bg-white/20 transition-colors duration-300;
+    }
+
+    /* 轮播图容器 */
+    .carousel-container {
+        position: relative;
+        width: 100%;
+    }
+
+    /* 轮播图片容器 */
+    .carousel-slides {
+        position: relative;
+        width: 100%;
+    }
+
+    /* 单个轮播项 */
+    .carousel-slide {
+        display: none;
+        width: 100%;
+    }
+
+    /* 渐变动画 */
+    .fade {
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+
+    @keyframes fade {
+        from {
+            opacity: 0.4;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* 活动指示器样式 */
+    .carousel-indicators .active {
+        @apply bg-white;
+        transform: scale(1.2);
+    }
+</style>
+
+<!-- 添加所需的脚本 -->
+<script>
+    // 数字计数动画
+    document.addEventListener('DOMContentLoaded', () => {
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const increment = target / speed;
+
+            const updateCount = () => {
+                const count = +counter.innerText;
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 1);
+                } else {
+                    counter.innerText = target.toLocaleString();
+                }
+            };
+
+            updateCount();
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let slideIndex = 0;
+        const slides = document.getElementsByClassName('carousel-slide');
+        const indicators = document.querySelectorAll('.carousel-indicators button');
+
+        // 显示当前幻灯片
+        function showSlides() {
+            // 隐藏所有幻灯片
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                indicators[i].classList.remove('active');
+            }
+
+            // 切换到下一张
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+
+            // 显示当前幻灯片和指示器
+            slides[slideIndex - 1].style.display = "block";
+            indicators[slideIndex - 1].classList.add('active');
+
+            // 设置自动播放间隔
+            setTimeout(showSlides, 5000); // 5秒切换一次
+        }
+
+        // 点击指示器切换幻灯片
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                slideIndex = index;
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                    indicators[i].classList.remove('active');
+                }
+                slides[index].style.display = "block";
+                indicator.classList.add('active');
+            });
+        });
+
+        // 启动轮播
+        showSlides();
+    });
+</script>
+
+{% endblock %}

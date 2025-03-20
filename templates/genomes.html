@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block Part1 %}
+<div class="container mx-auto px-4 py-8">
+    <!-- 页面标题和统计信息卡片 -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between mb-6">
+            <div class="space-y-2">
+                <h1 class="text-4xl font-bold bg-gradient-to-r from-horizon-500 to-horizon-700 bg-clip-text text-transparent tracking-tight">
+                    Genome Catalog
+                </h1>
+                <p class="text-gray-500 max-w-3xl leading-relaxed text-sm">
+                    Welcome to our metagenomic assembled genomes (MAGs) catalog. This database provides comprehensive information about genome quality, taxonomic classification, and environmental context.
+                </p>
+            </div>
+            <div class="flex gap-4">
+                <div class="bg-white rounded-xl shadow-sm p-4 border border-horizon-100 min-w-[140px] text-center">
+                    <div class="text-2xl font-bold text-horizon-600 mb-1">{{ total_genomes }}</div>
+                    <span class="text-xs uppercase tracking-wider text-gray-500">Total MAGs</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 过滤器和搜索框 -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-horizon-50 mb-8">
+            <form method="GET" action="{% url 'genome:genomes' %}" class="space-y-4">
+                <!-- 搜索框 -->
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <input type="text" name="q"
+                               class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-horizon-400 focus:border-horizon-400 transition-all duration-200 placeholder-gray-400 text-sm"
+                               placeholder="Search by ID, source, habitat or taxonomy..."
+                               value="{{ query }}">
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit"
+                                class="px-6 py-2.5 bg-horizon-600 text-white rounded-lg hover:bg-horizon-700 transition-all duration-200 text-sm font-medium">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                                Search
+                            </span>
+                        </button>
+                        <a href="{% url 'genome:genomes' %}"
+                           class="px-6 py-2.5 bg-white border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 transition-all duration-200 text-sm font-medium flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            Reset
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Habitat 快速筛选栏 -->
+                <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
+                    <span class="text-sm font-medium text-gray-500">Habitat:</span>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="?q=Mangrove"
+                           class="px-4 py-1.5 text-sm font-medium {% if query == 'Mangrove' %}text-white bg-emerald-600{% else %}text-emerald-700 bg-emerald-50 border border-emerald-200{% endif %} rounded-full hover:bg-emerald-100 transition-colors duration-200">
+                            Mangrove
+                        </a>
+                        <a href="?q=Saltmarsh"
+                           class="px-4 py-1.5 text-sm {% if query == 'Saltmarsh' %}text-white bg-blue-600{% else %}text-blue-700 bg-blue-100{% endif %} rounded-full hover:bg-blue-200 transition-colors duration-200">
+                            Saltmarsh
+                        </a>
+                        <a href="?q=Seagrass"
+                           class="px-4 py-1.5 text-sm {% if query == 'Seagrass' %}text-white bg-purple-600{% else %}text-purple-700 bg-purple-100{% endif %} rounded-full hover:bg-purple-200 transition-colors duration-200">
+                            Seagrass
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 数据表格 -->
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead>
+                    <tr class="bg-gray-50 border-b border-gray-200">
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                            <a href="?sort={% if sort_by == 'bin_id' %}-{% endif %}bin_id" class="flex items-center hover:text-horizon-100">
+                                Bin ID
+                                {% if sort_by == 'bin_id' %}↓{% elif sort_by == '-bin_id' %}↑{% endif %}
+                            </a>
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Source</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Habitat</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                            <a href="?sort={% if sort_by == 'completeness' %}-{% endif %}completeness" class="flex items-center hover:text-horizon-100">
+                                Completeness
+                                {% if sort_by == 'completeness' %}↓{% elif sort_by == '-completeness' %}↑{% endif %}
+                            </a>
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                            <a href="?sort={% if sort_by == 'contamination' %}-{% endif %}contamination" class="flex items-center hover:text-horizon-100">
+                                Contamination
+                                {% if sort_by == 'contamination' %}↓{% elif sort_by == '-contamination' %}↑{% endif %}
+                            </a>
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">GTDB Classification</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for genome in page_obj %}
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="{% url 'genome:genome_detail' genome.bin_id %}"
+                               class="text-sm font-medium text-horizon-600 hover:text-horizon-800">
+                                {{ genome.bin_id|default:"-" }}
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            {{ genome.source|default:"-" }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if genome.habitat == "Mangrove" %}
+                            <a href="?q=Mangrove"
+                               class="px-3 py-1 text-sm text-emerald-700 bg-emerald-100 rounded-full hover:bg-emerald-200 transition-colors duration-200 inline-block">
+                                {{ genome.habitat }}
+                            </a>
+                            {% elif genome.habitat == "Saltmarsh" %}
+                            <a href="?q=Saltmarsh"
+                               class="px-3 py-1 text-sm text-blue-700 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors duration-200 inline-block">
+                                {{ genome.habitat }}
+                            </a>
+                            {% elif genome.habitat == "Seagrass" %}
+                            <a href="?q=Seagrass"
+                               class="px-3 py-1 text-sm text-purple-700 bg-purple-100 rounded-full hover:bg-purple-200 transition-colors duration-200 inline-block">
+                                {{ genome.habitat }}
+                            </a>
+                            {% elif genome.habitat == "NA" or not genome.habitat %}
+                            <span class="text-sm text-gray-600">-</span>
+                            {% else %}
+                            <span class="px-3 py-1 text-sm text-horizon-700 bg-horizon-100 rounded-full">
+                                {{ genome.habitat }}
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-3 py-1 text-sm text-gray-600">
+                                {{ genome.completeness|floatformat:1|default:"-" }}%
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            {{ genome.contamination|floatformat:1|default:"-" }}%
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            {{ genome.get_short_taxonomy|default:"-" }}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-6 py-8 text-center">
+                            <div class="flex flex-col items-center justify-center text-gray-500">
+                                <svg class="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <p class="text-lg">No genomes found</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 分页控件 -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div class="flex justify-center mt-8">
+        <nav class="flex items-center gap-2" aria-label="Pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if quality_filter %}&quality={{ quality_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}"
+               class="px-4 py-2 rounded-lg bg-white border border-horizon-200 text-horizon-600 hover:bg-horizon-50 transition-colors duration-200">
+                Previous
+            </a>
+            {% endif %}
+
+            <span class="px-4 py-2 rounded-lg bg-horizon-100 text-horizon-700 font-medium">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if quality_filter %}&quality={{ quality_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}"
+               class="px-4 py-2 rounded-lg bg-white border border-horizon-200 text-horizon-600 hover:bg-horizon-50 transition-colors duration-200">
+                Next
+            </a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

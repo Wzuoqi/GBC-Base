@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <title>GBC-Base</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <script src="{% static 'js/menu.js' %}" defer></script>
+    <script src="{% static 'js/tools.js' %}" defer></script>
+    <script src="https://kit.fontawesome.com/7773f17b16.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+</head>
+
+<body class="bg-gray-50 flex flex-col min-h-screen">
+    <header class="relative isolate z-10 bg-white shadow-md">
+        <nav class="w-full flex items-center justify-between py-2 px-4 mx-auto max-w-7xl lg:px-8" aria-label="Global">
+            <div class="flex lg:flex-1">
+                <a href="/" class="-m-1.5 p-1.5 flex items-center group">
+                    <img class="h-7 w-auto" src="{% static 'logo.svg' %}" alt="Logo">
+                    <div class="ml-3 relative">
+                        <span class="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-horizon-600 via-horizon-700 to-horizon-800 tracking-tight drop-shadow-sm">GBC-Base</span>
+                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-horizon-600 via-horizon-700 to-horizon-800 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="flex lg:hidden">
+                <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 shadow-sm">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+            <div class="hidden lg:flex lg:gap-x-4">
+                <div>
+                    <button id="product-btn" type="button" class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 px-3 py-1.5 bg-white shadow-sm rounded-lg hover:shadow-md transition-shadow" aria-expanded="false">
+                        <span class="icon-[nimbus--browser-search] w-5 h-5 text-horizon-600 mr-1"></span>
+                        Browsers
+                        <svg class="h-4 w-4 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div id="product-menu" class="absolute inset-x-0 top-0 -z-10 hidden bg-white pt-10 shadow-lg ring-1 ring-gray-900/5">
+                        <div class="mx-auto grid max-w-7xl grid-cols-4 gap-x-6 px-6 py-8 lg:px-8 xl:gap-x-8">
+                            <div class="group relative flex items-center rounded-lg p-4 text-sm leading-6 hover:bg-horizon-50 border-b border-horizon-100">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                    <span class="icon-[vaadin--records] h-6 w-6 text-gray-600 group-hover:text-horizon-600"></span>
+                                </div>
+                                <div class="ml-4">
+                                    <a href="/record" class="block font-semibold text-gray-900">
+                                        Functional Record
+                                        <span class="absolute inset-0"></span>
+                                    </a>
+                                    <p class="mt-1 text-gray-600">Records of insect symbiont with verified function from literature</p>
+                                </div>
+                            </div>
+                            <div class="group relative flex items-center rounded-lg p-4 text-sm leading-6 hover:bg-horizon-50 border-b border-horizon-100">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                    <span class="icon-[streamline--bacteria-virus-cells-biology] h-6 w-6 text-gray-600 group-hover:text-horizon-600"></span>
+                                </div>
+                                <div class="ml-4">
+                                    <a href="/" class="block font-semibold text-gray-900">
+                                        Functional Microbe
+                                        <span class="absolute inset-0"></span>
+                                    </a>
+                                    <p class="mt-1 text-gray-600">View insect hosts with symbionts records together with other available data</p>
+                                </div>
+                            </div>
+                            <div class="group relative flex items-center rounded-lg p-4 text-sm leading-6 hover:bg-horizon-50 border-b border-horizon-100">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                    <span class="icon-[carbon--assembly-cluster] h-6 w-6 text-gray-600 group-hover:text-horizon-600"></span>
+                                </div>
+                                <div class="ml-4">
+                                    <a href="/metagenome" class="block font-semibold text-gray-900">
+                                        Metagenome
+                                        <span class="absolute inset-0"></span>
+                                    </a>
+                                    <p class="mt-1 text-gray-600">Metagenomes associated with insect symbionts worldwide</p>
+                                </div>
+                            </div>
+                            <div class="group relative flex items-center rounded-lg p-4 text-sm leading-6 hover:bg-horizon-50 border-b border-horizon-100">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                    <span class="icon-[ic--baseline-biotech] h-7 w-7 text-gray-600 group-hover:text-horizon-600"></span>
+                                </div>
+                                <div class="ml-4">
+                                    <a href="/amplicon" class="block font-semibold text-gray-900">
+                                        Amplicon
+                                        <span class="absolute inset-0"></span>
+                                    </a>
+                                    <p class="mt-1 text-gray-600">Amplicon data about insect symbionts include 16s, 18s, and ITS</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50">
+                            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                                <div class="grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5">
+                                    <a href="/"
+                                        class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
+                                        <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20"
+                                            fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                d="M9.25 3.5a5.75 5.75 0 00-5.75 5.75c0 3.17 2.58 5.75 5.75 5.75a.75.75 0 010 1.5 7.25 7.25 0 01-7.25-7.25c0-4 3.25-7.25 7.25-7.25 4 0 7.25 3.25 7.25 7.25v.4c0 1.17-.93 2.1-2.1 2.1-1.16 0-2.1-.93-2.1-2.1v-.4a3.05 3.05 0 00-6.1 0 3.05 3.05 0 006.1 0v-.4c0-.28.22-.5.5-.5s.5.22.5.5v.4a3.55 3.55 0 007.1 0v-.4a7.25 7.25 0 00-7.25-7.25zm0 4.25a1.55 1.55 0 00-1.55 1.55c0 .85.7 1.55 1.55 1.55.86 0 1.55-.7 1.55-1.55 0-.85-.7-1.55-1.55-1.55z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                        Find Help
+                                    </a>
+                                    <a href="/"
+                                        class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
+                                        <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20"
+                                            fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 012.43 8.326 13.019 13.019 0 012 5V3.5z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                        Contact Us
+                                    </a>
+                                    <!-- <a href="/cite"
+                                        class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
+                                        <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20"
+                                            fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                d="M2.5 3A1.5 1.5 0 001 4.5v4A1.5 1.5 0 002.5 10h6A1.5 1.5 0 0010 8.5v-4A1.5 1.5 0 008.5 3h-6zm11 2A1.5 1.5 0 0012 6.5v7a1.5 1.5 0 001.5 1.5h4a1.5 1.5 0 001.5-1.5v-7A1.5 1.5 0 0017.5 5h-4zm-10 7A1.5 1.5 0 002 13.5v2A1.5 1.5 0 003.5 17h6a1.5 1.5 0 001.5-1.5v-2A1.5 1.5 0 009.5 12h-6z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                        Cite database
+                                    </a> -->
+                                    <a href="javascript:void(0)" onclick="showModal()"
+                                        class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
+                                        <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20"
+                                            fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                d="M2.5 3A1.5 1.5 0 001 4.5v4A1.5 1.5 0 002.5 10h6A1.5 1.5 0 0010 8.5v-4A1.5 1.5 0 008.5 3h-6zm11 2A1.5 1.5 0 0012 6.5v7a1.5 1.5 0 001.5 1.5h4a1.5 1.5 0 001.5-1.5v-7A1.5 1.5 0 0017.5 5h-4zm-10 7A1.5 1.5 0 002 13.5v2A1.5 1.5 0 003.5 17h6a1.5 1.5 0 001.5-1.5v-2A1.5 1.5 0 009.5 12h-6z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+
+                                        Cite Database
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools 下拉菜单 -->
+                <div class="relative" data-dropdown>
+                    <button type="button" data-dropdown-button class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 px-3 py-1.5 bg-white shadow-sm rounded-lg hover:shadow-md transition-shadow">
+                        <svg class="w-4 h-4 text-horizon-600 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        Tools
+                        <svg class="h-4 w-4 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div data-dropdown-menu class="absolute hidden left-1/2 z-10 mt-3 w-64 -translate-x-1/2 transform px-2 sm:px-0 transition-all duration-200 ease-in-out">
+                        <div class="overflow-hidden rounded-lg shadow-lg border border-horizon-100">
+                            <div class="relative grid gap-4 bg-white px-4 py-4 sm:gap-6 sm:p-6 rounded-lg">
+                                <a href="/"
+                                    class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-900">BLAST</p>
+                                        <p class="mt-1 text-xs text-gray-500">Search through seq similarity</p>
+                                    </div>
+                                </a>
+                                <a href="/"
+                                    class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-900">Batch Search</p>
+                                        <p class="mt-1 text-xs text-gray-500">Identify symbionts from taxonomic
+                                            composition data</p>
+                                    </div>
+                                </a>
+                                <a href="/"
+                                    class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-900">Interactive Map</p>
+                                        <p class="mt-1 text-xs text-gray-500">Explore data on the world map</p>
+                                    </div>
+                                </a>
+                                <a href="/"
+                                    class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-900">Composition Compare</p>
+                                        <p class="mt-1 text-xs text-gray-500">Compare symbiont compositions across
+                                            different hosts</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Catalog 下拉菜单 -->
+                <div class="relative" data-dropdown>
+                    <button type="button" data-dropdown-button class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 px-3 py-1.5 bg-white shadow-sm rounded-lg hover:shadow-md transition-shadow">
+                        <svg class="w-4 h-4 text-horizon-600 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        Catalog
+                        <svg class="h-4 w-4 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div data-dropdown-menu
+                        class="absolute hidden left-1/2 z-10 mt-3 w-64 -translate-x-1/2 transform px-2 sm:px-0">
+                        <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                            <div class="relative grid gap-4 bg-white px-4 py-4 sm:gap-6 sm:p-6">
+                                <a href="/"
+                                    class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-900">Gene Catalog</p>
+                                        <p class="mt-1 text-xs text-gray-500">Browse gene catalog</p>
+                                    </div>
+                                </a>
+                                <a href="/genome"
+                                    class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-900">Genome Catalog</p>
+                                        <p class="mt-1 text-xs text-gray-500">Explore genome catalog</p>
+                                    </div>
+                                </a>
+                                <a href="/virus" class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-900">Virus Catalog</p>
+                                        <p class="mt-1 text-xs text-gray-500">Explore virus catalog</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Factor 下拉菜单 -->
+                <div class="relative" data-dropdown>
+                    <button type="button" data-dropdown-button class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 px-3 py-1.5 bg-white shadow-sm rounded-lg hover:shadow-md transition-shadow">
+                        <span class="icon-[material-symbols--eco-outline] w-4 h-4 text-horizon-600 mr-1"></span>
+                        Factor
+                        <svg class="h-4 w-4 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div data-dropdown-menu
+                        class="absolute hidden left-1/2 z-10 mt-3 w-64 -translate-x-1/2 transform px-2 sm:px-0">
+                        <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                            <div class="relative grid gap-4 bg-white px-4 py-4 sm:gap-6 sm:p-6">
+                                <a href="/"
+                                    class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-900">Soil factors</p>
+                                        <p class="mt-1 text-xs text-gray-500">Browse literature associated with insect
+                                            symbionts</p>
+                                    </div>
+                                </a>
+                                <a href="/"
+                                    class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-900">Seawater factors</p>
+                                        <p class="mt-1 text-xs text-gray-500">Access external resources</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Component -->
+                <div id="modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+                    <div class="relative bg-kabuli-800 rounded-lg p-4 max-w-screen-md w-full">
+                        <div class="absolute top-4 left-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" aria-hidden="true"
+                                class="mt-px h-6 w-6">
+                                <path fill-rule="evenodd"
+                                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-8 mr-12">
+                            <div class="flex items-center">
+                                <h5 class="text-xl font-semibold text-white">Cite database</h5>
+                                <button id="copyButton" onclick="copyToClipboard()"
+                                    class="group relative ml-4 p-2 text-white hover:text-gray-300 rounded-lg hover:bg-white/10 transition-colors">
+                                    <span class="h-6 w-6 icon-[ion--copy-outline]"></span>
+                                    <!-- Tooltip -->
+                                    <span id="tooltipText" class="absolute -top-8 left-1/2 -translate-x-1/2 hidden group-hover:block
+                                        bg-gray-900 text-white text-xs py-1 px-2 rounded whitespace-nowrap">
+                                        Copy to clipboard
+                                    </span>
+                                </button>
+                            </div>
+                            <p id="citation-text" class="mt-2 text-base text-white">
+                                Author1, Author2, et al. (2024). InsectSymbiontBase: A comprehensive database for insect
+                                symbionts. Journal,
+                                Volume(Issue), pages. DOI: 10.1093/journal/xxx (test)
+                            </p>
+                        </div>
+                        <div onclick="hideModal()"
+                            class="absolute top-3 right-3 w-max rounded-lg transition-all hover:bg-white hover:bg-opacity-20 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24"
+                                stroke="white" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                <a href="/" class="text-sm font-semibold leading-6 text-gray-900 flex items-center gap-1 px-3 py-1.5 bg-white shadow-sm rounded-lg hover:shadow-md transition-shadow">
+                    <svg class="w-4 h-4 text-horizon-600 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Help
+                </a>
+            </div>
+        </nav>
+
+    </header>
+
+    <main class="flex-grow">
+        {% block Part1 %}
+        <p>base模板的Part</p>
+        {% endblock %}
+    </main>
+
+    <footer class="bg-horizon-950">
+        <div class="mx-auto max-w-7xl px-6 py-8 lg:px-8">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <!-- Logo和描述 -->
+                <div class="space-y-6">
+                    <div class="flex items-center">
+                        <img class="h-9 w-auto brightness-0 invert" src="{% static 'logo.svg' %}" alt="GBC-Base">
+                        <span class="ml-2 text-2xl font-semibold text-white">GBC-Base</span>
+                    </div>
+                    <p class="text-sm leading-6 text-gray-300">
+                        A comprehensive database for insect symbionts, offering extensive resources to empower
+                        scientific discovery.
+                    </p>
+                    <div class="flex space-x-6">
+                        <!-- 实验室网站链接 -->
+                        <a href="http:\\lab.insect-genome.com" class="text-gray-400 hover:text-white">
+                            <span class="sr-only">Lab Website</span>
+                            <span class="icon-[material-symbols--science-outline] h-6 w-6"></span>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <span class="sr-only">GitHub</span>
+                            <span class="icon-[simple-icons--github] h-6 w-6"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 导航链接 -->
+                <div class="mt-12 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold leading-6 text-white">Browsers</h3>
+                            <ul role="list" class="mt-4 space-y-3">
+                                <li>
+                                    <a href="/"
+                                        class="text-sm leading-6 text-gray-300 hover:text-white">Symbiont Records</a>
+                                </li>
+                                <li>
+                                    <a href="/" class="text-sm leading-6 text-gray-300 hover:text-white">Insect
+                                        Host</a>
+                                </li>
+                                <li>
+                                    <a href="/"
+                                        class="text-sm leading-6 text-gray-300 hover:text-white">Metagenome</a>
+                                </li>
+                                <li>
+                                    <a href="/"
+                                        class="text-sm leading-6 text-gray-300 hover:text-white">Amplicon</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 md:mt-0">
+                            <h3 class="text-sm font-semibold leading-6 text-white">Tools</h3>
+                            <ul role="list" class="mt-4 space-y-3">
+                                <li>
+                                    <a href="/" class="text-sm leading-6 text-gray-300 hover:text-white">BLAST</a>
+                                </li>
+                                <li>
+                                    <a href="/"
+                                        class="text-sm leading-6 text-gray-300 hover:text-white">Batch Search</a>
+                                </li>
+                                <li>
+                                    <a href="/" class="text-sm leading-6 text-gray-300 hover:text-white">Interactive
+                                        Map</a>
+                                </li>
+                                <li>
+                                    <a href="/"
+                                        class="text-sm leading-6 text-gray-300 hover:text-white">Network</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold leading-6 text-white">Resources</h3>
+                            <ul role="list" class="mt-4 space-y-3">
+                                <li>
+                                    <a href="/"
+                                        class="text-sm leading-6 text-gray-300 hover:text-white">Factor</a>
+                                </li>
+                                <li>
+                                    <a href="/" class="text-sm leading-6 text-gray-300 hover:text-white">Gene
+                                        Catalog</a>
+                                </li>
+                                <li>
+                                    <a href="/" class="text-sm leading-6 text-gray-300 hover:text-white">Genome
+                                        Catalog</a>
+                                </li>
+                                <li>
+                                    <a href="/"
+                                        class="text-sm leading-6 text-gray-300 hover:text-white">Virus</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 md:mt-0">
+                            <h3 class="text-sm font-semibold leading-6 text-white">Support</h3>
+                            <ul role="list" class="mt-4 space-y-3">
+                                <li>
+                                    <a href="/" class="text-sm leading-6 text-gray-300 hover:text-white">Help
+                                        Center</a>
+                                </li>
+                                <li>
+                                    <a href="/" class="text-sm leading-6 text-gray-300 hover:text-white">Contact
+                                        Us</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" onclick="showModal()"
+                                        class="text-sm leading-6 text-gray-300 hover:text-white">Cite Us</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 版权信息 -->
+            <div class="mt-4 pt-4 border-t border-gray-800">
+                <p class="text-xs leading-5 text-gray-400 text-center">&copy; 2024 GBC-Base, Inc. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function showModal() {
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function hideModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        // Copy text to clipboard
+        function copyToClipboard() {
+            const text = document.getElementById('citation-text').innerText;
+            const button = document.getElementById('copyButton');
+            const tooltip = document.getElementById('tooltipText');
+
+            // 检查是否支持 Clipboard API
+            if (navigator.clipboard && window.isSecureContext) {
+                // 使用现代的 Clipboard API
+                navigator.clipboard.writeText(text).then(() => {
+                    showCopySuccess();
+                }).catch(() => {
+                    // 如果 Clipboard API 失败，尝试后备方案
+                    if (fallbackCopyToClipboard(text)) {
+                        showCopySuccess();
+                    } else {
+                        showCopyError();
+                    }
+                });
+            } else {
+                // 直接使用后备方案
+                if (fallbackCopyToClipboard(text)) {
+                    showCopySuccess();
+                } else {
+                    showCopyError();
+                }
+            }
+        }
+
+        // 显示复制成功的视觉反馈
+        function showCopySuccess() {
+            const button = document.getElementById('copyButton');
+            const tooltip = document.getElementById('tooltipText');
+
+            tooltip.textContent = 'Copied!';
+            button.classList.add('text-green-400');
+
+            setTimeout(() => {
+                tooltip.textContent = 'Copy to clipboard';
+                button.classList.remove('text-green-400');
+            }, 2000);
+        }
+
+        // 显示复制失败的视觉反馈
+        function showCopyError() {
+            const button = document.getElementById('copyButton');
+            const tooltip = document.getElementById('tooltipText');
+
+            tooltip.textContent = 'Failed to copy';
+            button.classList.add('text-red-400');
+
+            setTimeout(() => {
+                tooltip.textContent = 'Copy to clipboard';
+                button.classList.remove('text-red-400');
+            }, 2000);
+        }
+
+        // 后备复制方案
+        function fallbackCopyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+
+            // 将文本域移出可视区域
+            textArea.style.position = 'fixed';
+            textArea.style.top = '0';
+            textArea.style.left = '-9999px';
+            textArea.style.opacity = '0';
+
+            document.body.appendChild(textArea);
+
+            try {
+                textArea.select();
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                return successful;
+            } catch (err) {
+                document.body.removeChild(textArea);
+                return false;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Catalog 下拉菜单的处理
+            const catalogBtn = document.getElementById('catalog-btn');
+            const catalogMenu = document.getElementById('catalog-menu');
+
+            catalogBtn.addEventListener('click', function (event) {
+                event.stopPropagation();
+                catalogMenu.classList.toggle('hidden');
+            });
+
+            // 点击其他地方时关闭 Catalog 菜单
+            document.addEventListener('click', function (event) {
+                if (!catalogBtn.contains(event.target) && !catalogMenu.contains(event.target)) {
+                    catalogMenu.classList.add('hidden');
+                }
+            });
+
+            // Tools 下拉菜单的处理
+            const toolsBtn = document.getElementById('tools-btn');
+            const toolsMenu = document.getElementById('tools-menu');
+
+            toolsBtn.addEventListener('click', function (event) {
+                event.stopPropagation();
+                toolsMenu.classList.toggle('hidden');
+            });
+
+            // 点击其他地方时关闭 Tools 菜单
+            document.addEventListener('click', function (event) {
+                if (!toolsBtn.contains(event.target) && !toolsMenu.contains(event.target)) {
+                    toolsMenu.classList.add('hidden');
+                }
+            });
+
+            // 防止 Tools 菜单内部点击事件冒泡
+            toolsMenu.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+
+        // 下拉菜单处理
+        document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('click', e => {
+                // 检查点击的元素是否是下拉按钮或其子元素
+                const isDropdownButton = e.target.matches("[data-dropdown-button], [data-dropdown-button] *")
+
+                // 如果点击的不是下拉按钮区域，且点击在下拉菜单内，则不做任何处理
+                if (!isDropdownButton && e.target.closest('[data-dropdown]') != null) return
+
+                let currentDropdown
+                if (isDropdownButton) {
+                    // 获取最近的下拉容器
+                    currentDropdown = e.target.closest('[data-dropdown]')
+                    // 切换下拉菜单的显示状态
+                    currentDropdown.querySelector('[data-dropdown-menu]').classList.toggle('hidden')
+                }
+
+                // 关闭其他所有打开的下拉菜单
+                document.querySelectorAll('[data-dropdown] [data-dropdown-menu]').forEach(dropdown => {
+                    const container = dropdown.closest('[data-dropdown]')
+                    if (container !== currentDropdown) {
+                        dropdown.classList.add('hidden')
+                    }
+                })
+            })
+        })
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

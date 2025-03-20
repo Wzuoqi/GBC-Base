@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block Part1 %}
+<div class="container mx-auto px-4 py-8">
+    <!-- 返回按钮和标题区域 -->
+    <div class="mb-8">
+        <a href="{% url 'amplicon:amplicons' %}"
+           class="group inline-flex items-center text-gray-500 hover:text-teal-600 mb-6 transition-colors duration-200">
+            <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform duration-200"
+                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            <span class="text-sm font-medium">Back to Database</span>
+        </a>
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ amplicon.run }}</h1>
+                {% if amplicon.bioproject %}
+                <p class="text-gray-500 text-sm">
+                    BioProject: {{ amplicon.bioproject }}
+                    {% if amplicon.biosample %}
+                    <span class="mx-2">•</span>
+                    BioSample: {{ amplicon.biosample }}
+                    {% endif %}
+                </p>
+                {% endif %}
+            </div>
+            <div class="flex items-center gap-4">
+                {% if amplicon.amplicon_type %}
+                <div class="text-center px-4 py-2 bg-gradient-to-br from-white to-teal-50/30 rounded-lg border border-teal-100 shadow-sm">
+                    <span class="block text-xs text-gray-500 uppercase tracking-wide mb-1">Amplicon Type</span>
+                    <span class="text-sm font-medium text-teal-600">{{ amplicon.amplicon_type }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要信息卡片 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- 测序信息 -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <div class="flex items-center gap-2 mb-6">
+                <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                </svg>
+                <h2 class="text-xl font-semibold text-gray-900">Sequencing Information</h2>
+            </div>
+            <div class="space-y-4">
+                {% for field, value in sequencing_info.items %}
+                {% if value %}
+                <div class="p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border border-gray-100">
+                    <label class="block text-sm font-medium text-gray-500 mb-1">{{ field|title }}</label>
+                    <p class="text-sm text-gray-900">{{ value }}</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- 样本信息 -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <div class="flex items-center gap-2 mb-6">
+                <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+                </svg>
+                <h2 class="text-xl font-semibold text-gray-900">Sample Information</h2>
+            </div>
+            <div class="space-y-4">
+                {% for field, value in sample_info.items %}
+                {% if value %}
+                <div class="p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border border-gray-100">
+                    <label class="block text-sm font-medium text-gray-500 mb-1">{{ field|title }}</label>
+                    <p class="text-sm text-gray-900">{{ value }}</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- 地理位置信息 -->
+    {% if location_info.coordinates or location_info.geo_location %}
+    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-8">
+        <div class="flex items-center gap-2 mb-6">
+            <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            <h2 class="text-xl font-semibold text-gray-900">Geographic Location</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% if location_info.coordinates %}
+            <div class="p-4 bg-gradient-to-br from-teal-50 to-white rounded-lg border border-teal-100">
+                <label class="block text-sm font-medium text-gray-500 mb-1">Coordinates</label>
+                <p class="text-sm text-gray-900">{{ location_info.coordinates }}</p>
+            </div>
+            {% endif %}
+            {% if location_info.geo_location %}
+            <div class="p-4 bg-gradient-to-br from-emerald-50 to-white rounded-lg border border-emerald-100">
+                <label class="block text-sm font-medium text-gray-500 mb-1">Location</label>
+                <p class="text-sm text-gray-900">{{ location_info.geo_location }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

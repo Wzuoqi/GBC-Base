@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block Part1 %}
+<div class="container mx-auto px-4 py-8">
+    <!-- 返回按钮和标题 -->
+    <div class="mb-8">
+        <a href="{% url 'genome:genomes' %}" class="inline-flex items-center text-horizon-600 hover:text-horizon-700 mb-4">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            Back to Catalog
+        </a>
+        <h1 class="text-3xl font-bold text-gray-900">{{ genome.bin_id }}</h1>
+    </div>
+
+    <!-- 主要信息卡片 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- 基本信息 -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 border border-horizon-50">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Basic Information</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm text-gray-500">Source</label>
+                    <p class="text-gray-900">{{ genome.source|default:"-" }}</p>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-500">Habitat</label>
+                    <div class="mt-1">
+                        {% if genome.habitat == "Mangrove" %}
+                        <span class="px-3 py-1 text-sm text-emerald-700 bg-emerald-100 rounded-full">
+                            {{ genome.habitat }}
+                        </span>
+                        {% elif genome.habitat == "Saltmarsh" %}
+                        <span class="px-3 py-1 text-sm text-blue-700 bg-blue-100 rounded-full">
+                            {{ genome.habitat }}
+                        </span>
+                        {% elif genome.habitat == "Seagrass" %}
+                        <span class="px-3 py-1 text-sm text-purple-700 bg-purple-100 rounded-full">
+                            {{ genome.habitat }}
+                        </span>
+                        {% else %}
+                        <span class="text-gray-900">{{ genome.habitat|default:"-" }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 质量指标 -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 border border-horizon-50">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Quality Metrics</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm text-gray-500">Completeness</label>
+                    <p class="text-gray-900">{{ genome.completeness|floatformat:1|default:"-" }}%</p>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-500">Contamination</label>
+                    <p class="text-gray-900">{{ genome.contamination|floatformat:1|default:"-" }}%</p>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-500">Strain Heterogeneity</label>
+                    <p class="text-gray-900">{{ genome.strain_heterogeneity|floatformat:1|default:"-" }}%</p>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-500">Marker Lineage</label>
+                    <p class="text-gray-900">{{ genome.marker_lineage|default:"-" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分类信息 -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 border border-horizon-50 mb-8">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Taxonomic Classification</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="text-sm text-gray-500">GTDB Classification</label>
+                <p class="text-gray-900 font-mono">{{ genome.gtdb_classification|default:"-" }}</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-sm text-gray-500">Closest Reference Genome</label>
+                    <p class="text-gray-900">{{ genome.closest_genome_reference|default:"-" }}</p>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-500">ANI to Reference</label>
+                    <p class="text-gray-900">{{ genome.closest_genome_ani|floatformat:2|default:"-" }}%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

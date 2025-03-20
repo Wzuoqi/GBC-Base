@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block Part1 %}
+<div class="container mx-auto px-4 py-8">
+    <!-- 页面标题和统计信息卡片 -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between mb-4">
+            <div class="space-y-2">
+                <h1 class="text-4xl font-bold bg-gradient-to-r from-horizon-600 to-horizon-400 bg-clip-text text-transparent">
+                    Virus Catalog
+                </h1>
+                <p class="text-gray-600 max-w-3xl leading-relaxed">
+                    Welcome to our comprehensive virus catalog. This database contains detailed information about various viruses,
+                    including their types, quality assessments, and taxonomic classifications.
+                </p>
+            </div>
+            <div class="bg-white rounded-xl shadow-lg p-4 border border-horizon-100">
+                <span class="text-sm text-gray-500">Total Records</span>
+                <div class="text-2xl font-bold text-horizon-600">{{ page_obj.paginator.count }}</div>
+            </div>
+        </div>
+
+        <!-- 搜索框部分 -->
+        <div class="bg-white p-6 rounded-2xl shadow-lg border border-horizon-50 mb-8">
+            <form method="GET" action="{% url 'virus:virus' %}" class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                    <input type="text" name="q"
+                           class="w-full px-6 py-3 bg-gray-50 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-horizon-400 transition-all duration-300 placeholder-gray-400"
+                           placeholder="Search by type, quality or taxonomy..."
+                           value="{{ request.GET.q }}">
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit"
+                            class="px-8 py-3 bg-gradient-to-r from-horizon-500 to-horizon-600 text-white rounded-xl hover:from-horizon-600 hover:to-horizon-700 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            Search
+                        </span>
+                    </button>
+                    <a href="{% url 'virus:virus' %}"
+                       class="px-8 py-3 bg-white border-2 border-horizon-200 text-horizon-600 rounded-xl hover:bg-horizon-50 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        Reset
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 数据表格 -->
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-horizon-50">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead>
+                    <tr class="bg-gradient-to-r from-horizon-500 to-horizon-800">
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Virus ID</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Type</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Length</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Quality</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Taxonomy</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Source</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for virus in page_obj %}
+                    <tr class="transform hover:scale-[1.01] hover:bg-horizon-50 transition-all duration-200">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="{% url 'virus:virus_detail' virus.virus_id %}"
+                               class="text-sm font-medium text-horizon-600 hover:text-horizon-800">
+                                {{ virus.virus_id }}
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if virus.type == 'lytic' %}
+                            <a href="?q=lytic"
+                               class="px-3 py-1 text-sm text-blue-700 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors duration-200 inline-block">
+                                {{ virus.type }}
+                            </a>
+                            {% elif virus.type == 'lysogenic' %}
+                            <a href="?q=lysogenic"
+                               class="px-3 py-1 text-sm text-purple-700 bg-purple-100 rounded-full hover:bg-purple-200 transition-colors duration-200 inline-block">
+                                {{ virus.type }}
+                            </a>
+                            {% elif virus.type == "NA" or not virus.type %}
+                            <span class="px-3 py-1 text-sm text-gray-600">-</span>
+                            {% else %}
+                            <span class="px-3 py-1 text-sm text-horizon-700 bg-horizon-100 rounded-full">
+                                {{ virus.type }}
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            {% if virus.length == "NA" or not virus.length %}-{% else %}{{ virus.length }}{% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if virus.quality == 'high quality draft' %}
+                            <a href="?q=high quality draft"
+                               class="px-3 py-1 text-sm text-emerald-700 bg-emerald-100 rounded-full hover:bg-emerald-200 transition-colors duration-200 inline-block">
+                                {{ virus.quality }}
+                            </a>
+                            {% elif virus.quality == 'complete circular' %}
+                            <a href="?q=complete circular"
+                               class="px-3 py-1 text-sm text-amber-700 bg-amber-100 rounded-full hover:bg-amber-200 transition-colors duration-200 inline-block">
+                                {{ virus.quality }}
+                            </a>
+                            {% elif virus.quality == "NA" or not virus.quality %}
+                            <span class="px-3 py-1 text-sm text-gray-600">-</span>
+                            {% else %}
+                            <span class="px-3 py-1 text-sm text-gray-600">
+                                {{ virus.quality }}
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            {% if virus.taxonomy == "NA" or not virus.taxonomy %}-{% else %}{{ virus.taxonomy }}{% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            {% if virus.source == "NA" or not virus.source %}-{% else %}{{ virus.source }}{% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-6 py-8 text-center">
+                            <div class="flex flex-col items-center justify-center text-gray-500">
+                                <svg class="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <p class="text-lg">No viruses found</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 分页控件 -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div class="flex justify-center mt-8">
+        <nav class="flex items-center gap-2" aria-label="Pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+               class="px-4 py-2 rounded-lg bg-white border border-horizon-200 text-horizon-600 hover:bg-horizon-50 transition-colors duration-200">
+                Previous
+            </a>
+            {% endif %}
+
+            <span class="px-4 py-2 rounded-lg bg-horizon-100 text-horizon-700 font-medium">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+               class="px-4 py-2 rounded-lg bg-white border border-horizon-200 text-horizon-600 hover:bg-horizon-50 transition-colors duration-200">
+                Next
+            </a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
