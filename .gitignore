@@ -11,6 +11,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
+/venv_GBCBase
 # Django 静态和媒体文件
 /media/
 /common_static/
