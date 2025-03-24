@@ -127,7 +127,14 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {% if seawater_factors %}
                         <div class="bg-white rounded-xl shadow-lg p-6">
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Seawater Factors</h3>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Seawater Factors</h3>
+                                <a href="{% url 'export_seawater_factors' %}?longitude={{ request.GET.longitude }}&latitude={{ request.GET.latitude }}&distance={{ distance }}"
+                                   class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-horizon-500">
+                                    <span class="icon-[carbon--download] w-4 h-4 mr-1.5"></span>
+                                    Export
+                                </a>
+                            </div>
                             <div class="space-y-4">
                                 {% for factor in seawater_factors %}
                                     <!-- 海水因子卡片 -->
@@ -147,7 +154,14 @@
 
                     {% if soil_factors %}
                         <div class="bg-white rounded-xl shadow-lg p-6">
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Soil Factors</h3>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Soil Factors</h3>
+                                <a href="{% url 'export_soil_factors' %}?longitude={{ request.GET.longitude }}&latitude={{ request.GET.latitude }}&distance={{ distance }}"
+                                   class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-horizon-500">
+                                    <span class="icon-[carbon--download] w-4 h-4 mr-1.5"></span>
+                                    Export
+                                </a>
+                            </div>
                             <div class="space-y-4">
                                 {% for factor in soil_factors %}
                                     <!-- 土壤因子卡片 -->

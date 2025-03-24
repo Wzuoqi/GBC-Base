@@ -7,6 +7,8 @@ from seawater_factor.models import SeawaterFactor
 from soil_factor.models import SoilFactor
 from math import radians, cos, sin, asin, sqrt
 from django.db.models import Q
+import csv
+from datetime import datetime
 
 def home(request):
     return render(request, "home.html")
@@ -108,4 +110,137 @@ def soil_detail(request, factor_id):
     """
     factor = get_object_or_404(SoilFactor, id=factor_id)
     return render(request, "soil_detail.html", {'factor': factor})
+
+def export_seawater_factors(request):
+    """
+    Export seawater factors search results to TSV based on the SeawaterFactor model fields
+    """
+    try:
+        # 获取搜索参数
+        longitude = float(request.GET.get('longitude'))
+        latitude = float(request.GET.get('latitude'))
+        distance = float(request.GET.get('distance', 500))
+
+        # 查询数据
+        seawater_factors = list(SeawaterFactor.objects.all())
+        # 计算距离并过滤
+        filtered_factors = []
+        for factor in seawater_factors:
+            factor.distance = haversine(longitude, latitude, factor.longitude, factor.latitude)
+            if factor.distance <= distance:
+                filtered_factors.append(factor)
+
+        # 按距离排序
+        filtered_factors.sort(key=lambda x: x.distance)
+
+        # 创建响应
+        response = HttpResponse(content_type='text/tab-separated-values')
+        response['Content-Disposition'] = f'attachment; filename="seawater_factors_{datetime.now().strftime("%Y%m%d_%H%M%S")}.tsv"'
+
+        # 写入数据
+        writer = csv.writer(response, delimiter='\t')
+        writer.writerow([
+            'ID', 'Latitude', 'Longitude', 'Distance (km)',
+            'Salinity (PSU)',
+            'Silicate (μmol/L)',
+            'Phosphate (μmol/L)',
+            'Nitrate (μmol/L)',
+            'Iron (μmol/L)',
+            'pH',
+            'Dissolved Oxygen (μmol/kg)',
+            'Temperature (°C)',
+            'Seawater Direction (degrees)',
+            'Seawater Speed (m/s)',
+            'Primary Productivity (mg C/m³/day)',
+            'Created At', 'Updated At'
+        ])
+
+        for factor in filtered_factors:
+            writer.writerow([
+                factor.id,
+                factor.latitude,
+                factor.longitude,
+                f"{factor.distance:.2f}",
+                factor.salinity,
+                factor.silicate,
+                factor.phosphate,
+                factor.nitrate,
+                factor.iron,
+                factor.ph,
+                factor.dissolved_oxygen,
+                factor.ocean_temperature,
+                factor.seawater_direction,
+                factor.seawater_speed,
+                factor.primary_productivity,
+                factor.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                factor.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+            ])
+
+        return response
+
+    except (ValueError, TypeError) as e:
+        return HttpResponse(f"Error: {str(e)}", status=400)
+
+def export_soil_factors(request):
+    """
+    Export soil factors search results to TSV based on the SoilFactor model fields
+    """
+    try:
+        # 获取搜索参数
+        longitude = float(request.GET.get('longitude'))
+        latitude = float(request.GET.get('latitude'))
+        distance = float(request.GET.get('distance', 500))
+
+        # 查询数据
+        soil_factors = list(SoilFactor.objects.all())
+        # 计算距离并过滤
+        filtered_factors = []
+        for factor in soil_factors:
+            factor.distance = haversine(longitude, latitude, factor.longitude, factor.latitude)
+            if factor.distance <= distance:
+                filtered_factors.append(factor)
+
+        # 按距离排序
+        filtered_factors.sort(key=lambda x: x.distance)
+
+        # 创建响应
+        response = HttpResponse(content_type='text/tab-separated-values')
+        response['Content-Disposition'] = f'attachment; filename="soil_factors_{datetime.now().strftime("%Y%m%d_%H%M%S")}.tsv"'
+
+        # 写入数据
+        writer = csv.writer(response, delimiter='\t')
+        writer.writerow([
+            'ID', 'Latitude', 'Longitude', 'Distance (km)',
+            'Average Organic Carbon (%)',
+            'Organic Carbon Upper Depth (cm)', 'Organic Carbon Lower Depth (cm)',
+            'Average Total Carbon (%)',
+            'Total Carbon Upper Depth (cm)', 'Total Carbon Lower Depth (cm)',
+            'Average Organic Matter (%)',
+            'Organic Matter Upper Depth (cm)', 'Organic Matter Lower Depth (cm)',
+            'Created At', 'Updated At'
+        ])
+
+        for factor in filtered_factors:
+            writer.writerow([
+                factor.id,
+                factor.latitude,
+                factor.longitude,
+                f"{factor.distance:.2f}",
+                factor.average_organic_carbon,
+                factor.organic_carbon_upper_depth,
+                factor.organic_carbon_lower_depth,
+                factor.average_total_carbon,
+                factor.total_carbon_upper_depth,
+                factor.total_carbon_lower_depth,
+                factor.average_organic_matter,
+                factor.organic_matter_upper_depth,
+                factor.organic_matter_lower_depth,
+                factor.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                factor.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+            ])
+
+        return response
+
+    except (ValueError, TypeError) as e:
+        return HttpResponse(f"Error: {str(e)}", status=400)
 

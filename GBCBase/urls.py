@@ -46,5 +46,6 @@ urlpatterns = [
     path('factors/', views.factors, name="factors"),
     path('factors/seawater/<int:factor_id>/', views.seawater_detail, name='seawater_detail'),
     path('factors/soil/<int:factor_id>/', views.soil_detail, name='soil_detail'),
-
+    path('factors/export/seawater/', views.export_seawater_factors, name='export_seawater_factors'),
+    path('factors/export/soil/', views.export_soil_factors, name='export_soil_factors'),
 ]
