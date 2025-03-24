@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block Part1 %}
+<div class="bg-gray-50 min-h-screen">
+    <!-- 顶部导航 -->
+    <div class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="{% url 'factors' %}" class="inline-flex items-center text-horizon-600 hover:text-horizon-700">
+                            <span class="icon-[carbon--arrow-left] w-5 h-5 mr-2"></span>
+                            Back to Factors
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <!-- 标题部分 -->
+            <div class="px-4 py-5 sm:px-6 bg-gradient-to-r from-blue-50 to-blue-100">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Seawater Environmental Factors</h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500">Details for location {{ factor.location_description }}</p>
+                    </div>
+                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                        <span class="icon-[carbon--location] w-5 h-5"></span>
+                        <span>{{ factor.latitude }}, {{ factor.longitude }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 地图显示 -->
+            <div class="border-t border-gray-200">
+                <div id="map" class="h-64 w-full"></div>
+            </div>
+
+            <!-- 详细信息 -->
+            <div class="border-t border-gray-200">
+                <dl>
+                    <!-- 物理参数 -->
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Ocean Temperature</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.ocean_temperature|default:"Not available" }} °C</dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">pH</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.ph|default:"Not available" }}</dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Dissolved Oxygen</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.dissolved_oxygen|default:"Not available" }} μmol/kg</dd>
+                    </div>
+
+                    <!-- 化学参数 -->
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Salinity</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.salinity|default:"Not available" }} PSU</dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Silicate</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.silicate|default:"Not available" }} μmol/L</dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Phosphate</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.phosphate|default:"Not available" }} μmol/L</dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Nitrate</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.nitrate|default:"Not available" }} μmol/L</dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Iron</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.iron|default:"Not available" }} μmol/L</dd>
+                    </div>
+
+                    <!-- 海流信息 -->
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Seawater Direction</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.seawater_direction|default:"Not available" }}°</dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Seawater Speed</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.seawater_speed|default:"Not available" }} m/s</dd>
+                    </div>
+
+                    <!-- 生物参数 -->
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Primary Productivity</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.primary_productivity|default:"Not available" }} mg C/m³/day</dd>
+                    </div>
+
+                    <!-- 计算的水质指数 -->
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Water Quality Index</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            {% if factor.water_quality_index %}
+                                <div class="flex items-center">
+                                    <div class="w-40 bg-gray-200 rounded-full h-2.5 mr-2">
+                                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ factor.water_quality_index }}%"></div>
+                                    </div>
+                                    <span>{{ factor.water_quality_index|floatformat:1 }}</span>
+                                </div>
+                            {% else %}
+                                Not available
+                            {% endif %}
+                        </dd>
+                    </div>
+
+                    <!-- 是否为热带水域 -->
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Tropical Waters</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            {% if factor.is_tropical %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    Yes
+                                </span>
+                            {% else %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                    No
+                                </span>
+                            {% endif %}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 地图脚本 -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化地图
+        var map = L.map('map').setView([{{ factor.latitude }}, {{ factor.longitude }}], 10);
+
+        // 添加地图图层
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // 添加标记
+        L.marker([{{ factor.latitude }}, {{ factor.longitude }}])
+            .addTo(map)
+            .bindPopup("<strong>Seawater Factor</strong><br>{{ factor.location_description }}")
+            .openPopup();
+    });
+</script>
+{% endblock %}

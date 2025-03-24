@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block Part1 %}
+<div class="relative min-h-screen bg-gray-50">
+    <!-- 顶部背景图 -->
+    <div class="relative h-64 bg-gradient-to-r from-horizon-700 to-horizon-900 overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-horizon-900/50 to-horizon-700/70"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
+            <h1 class="text-4xl font-bold text-white tracking-tight">Environmental Factors</h1>
+            <p class="mt-4 text-xl text-white/80 max-w-3xl">
+                Explore seawater and soil environmental factors from global blue carbon ecosystems
+            </p>
+        </div>
+    </div>
+
+    <!-- 主要内容区域 -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 pb-16">
+        <!-- 搜索卡片 -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Search Environmental Factors</h2>
+            <form method="GET" action="{% url 'factors' %}" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- 经度输入 -->
+                    <div>
+                        <label for="longitude" class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="icon-[carbon--location] w-5 h-5 text-gray-400"></span>
+                            </div>
+                            <input type="number" step="0.0001" name="longitude" id="longitude"
+                                   class="block w-full pl-10 pr-12 py-2 rounded-md border border-gray-300 focus:ring-horizon-500 focus:border-horizon-500"
+                                   placeholder="e.g. -64.417" value="{{ request.GET.longitude }}">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">°E/W</span>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">Enter a value between -180 and 180</p>
+                    </div>
+
+                    <!-- 纬度输入 -->
+                    <div>
+                        <label for="latitude" class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="icon-[carbon--location] w-5 h-5 text-gray-400"></span>
+                            </div>
+                            <input type="number" step="0.0001" name="latitude" id="latitude"
+                                   class="block w-full pl-10 pr-12 py-2 rounded-md border border-gray-300 focus:ring-horizon-500 focus:border-horizon-500"
+                                   placeholder="e.g. -54.75" value="{{ request.GET.latitude }}">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">°N/S</span>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">Enter a value between -90 and 90</p>
+                    </div>
+                </div>
+
+                <!-- 距离范围选择 -->
+                <div>
+                    <label for="distance" class="block text-sm font-medium text-gray-700 mb-1">Search Radius (km)</label>
+                    <div class="flex items-center space-x-4">
+                        <input type="range" name="distance" id="distance"
+                               min="1" max="1000" step="1"
+                               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-horizon-600"
+                               value="{{ distance|default:500 }}"
+                               oninput="updateDistanceValue(this.value)"
+                               onchange="updateDistanceValue(this.value)">
+                        <span id="distanceValue" class="text-sm font-medium text-gray-700 w-16 text-center">{{ distance|default:500 }} km</span>
+                    </div>
+                </div>
+
+                <!-- 搜索按钮 -->
+                <div class="flex justify-end">
+                    <button type="submit" class="inline-flex items-center px-6 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-horizon-600 hover:bg-horizon-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-horizon-500">
+                        <span class="icon-[carbon--search] w-5 h-5 mr-2"></span>
+                        Search
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 筛选标签 -->
+        <div class="flex items-center space-x-4 mb-6">
+            <a href="?{% if request.GET.longitude %}longitude={{ request.GET.longitude }}&latitude={{ request.GET.latitude }}&distance={{ distance }}{% endif %}"
+               class="px-4 py-2 rounded-full {% if not factor_type %}bg-horizon-600 text-white{% else %}bg-gray-100 text-gray-700{% endif %} hover:bg-horizon-700 hover:text-white transition-colors">
+                All Factors
+            </a>
+            <a href="?{% if request.GET.longitude %}longitude={{ request.GET.longitude }}&latitude={{ request.GET.latitude }}&distance={{ distance }}&{% endif %}type=seawater"
+               class="px-4 py-2 rounded-full {% if factor_type == 'seawater' %}bg-horizon-600 text-white{% else %}bg-gray-100 text-gray-700{% endif %} hover:bg-horizon-700 hover:text-white transition-colors">
+                Seawater Only
+            </a>
+            <a href="?{% if request.GET.longitude %}longitude={{ request.GET.longitude }}&latitude={{ request.GET.latitude }}&distance={{ distance }}&{% endif %}type=soil"
+               class="px-4 py-2 rounded-full {% if factor_type == 'soil' %}bg-horizon-600 text-white{% else %}bg-gray-100 text-gray-700{% endif %} hover:bg-horizon-700 hover:text-white transition-colors">
+                Soil Only
+            </a>
+        </div>
+
+        <!-- 结果显示区域 -->
+        {% if searched %}
+            {% if seawater_factors or soil_factors %}
+                <!-- 地图容器 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                    <div id="map" class="w-full h-[600px]"></div>
+                    <!-- 地图图例 -->
+                    <div class="p-4 border-t">
+                        <div class="flex items-center space-x-6">
+                            <div class="flex items-center">
+                                <div style="background-color: #3B82F6; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;" class="mr-2"></div>
+                                <span class="text-sm text-gray-600">Seawater Factor</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div style="background-color: #D97706; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;" class="mr-2"></div>
+                                <span class="text-sm text-gray-600">Soil Factor</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div style="background-color: #9333EA; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white;" class="mr-2"></div>
+                                <span class="text-sm text-gray-600">Both Factors</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 结果列表 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {% if seawater_factors %}
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Seawater Factors</h3>
+                            <div class="space-y-4">
+                                {% for factor in seawater_factors %}
+                                    <!-- 海水因子卡片 -->
+                                    <div class="border rounded-lg p-4">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <p class="text-sm text-gray-500">Location: {{ factor.location_description }}</p>
+                                                <p class="text-sm text-gray-500">Distance: {{ factor.distance|floatformat:2 }} km</p>
+                                            </div>
+                                            <a href="{% url 'seawater_detail' factor.id %}" class="text-horizon-600 hover:text-horizon-700">View Details</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if soil_factors %}
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Soil Factors</h3>
+                            <div class="space-y-4">
+                                {% for factor in soil_factors %}
+                                    <!-- 土壤因子卡片 -->
+                                    <div class="border rounded-lg p-4">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <p class="text-sm text-gray-500">Location: {{ factor.location_description }}</p>
+                                                <p class="text-sm text-gray-500">Distance: {{ factor.distance|floatformat:2 }} km</p>
+                                            </div>
+                                            <a href="{% url 'soil_detail' factor.id %}" class="text-horizon-600 hover:text-horizon-700">View Details</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <!-- 无结果提示 -->
+                <div class="bg-white rounded-xl shadow-md p-8 text-center">
+                    <span class="icon-[carbon--warning] w-12 h-12 text-gray-400 mx-auto mb-4"></span>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">No Results Found</h3>
+                    <p class="text-gray-500">No environmental factors were found within {{ distance|default:500 }} km of the specified coordinates.</p>
+                    <p class="text-gray-500 mt-2">Try increasing the search radius or searching in a different location.</p>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="bg-white rounded-xl shadow-md p-8 text-center">
+                <span class="icon-[carbon--earth] w-12 h-12 text-gray-400 mx-auto mb-4"></span>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Enter coordinates to search</h3>
+                <p class="text-gray-500">Enter longitude and latitude coordinates to find environmental factors in that area.</p>
+                <p class="text-gray-500 mt-2">You can adjust the search radius to expand or narrow your search.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- 地图脚本 -->
+{% if seawater_factors or soil_factors %}
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+{% endif %}
+
+<script>
+    // 确保在页面加载时初始化距离值显示
+    document.addEventListener('DOMContentLoaded', function() {
+        const distanceInput = document.getElementById('distance');
+        if (distanceInput) {
+            updateDistanceValue(distanceInput.value);
+        }
+
+        {% if searched %}
+            // 初始化地图
+            var map = L.map('map', {
+                minZoom: 2,
+                maxBounds: [
+                    [-90, -180],
+                    [90, 180]
+                ]
+            }).setView([{{ request.GET.latitude }}, {{ request.GET.longitude }}], 8);
+
+            // 添加地图图层
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                noWrap: true  // 防止地图水平重复
+            }).addTo(map);
+
+            // 添加搜索中心标记
+            var searchMarker = L.marker([{{ request.GET.latitude }}, {{ request.GET.longitude }}])
+                .addTo(map)
+                .bindPopup("Search Center")
+                .openPopup();
+
+            // 添加搜索半径圆圈
+            var circle = L.circle([{{ request.GET.latitude }}, {{ request.GET.longitude }}], {
+                color: '#3B82F6',
+                fillColor: '#3B82F6',
+                fillOpacity: 0.1,
+                radius: {{ distance|default:500 }} * 1000 // 转换为米
+            }).addTo(map);
+
+            // 创建点位映射，用于检测重叠的点
+            var pointsMap = {};
+
+            // 首先遍历所有点，找出重叠的位置
+            {% for factor in seawater_factors %}
+                var key = "{{ factor.latitude }},{{ factor.longitude }}";
+                if (!pointsMap[key]) {
+                    pointsMap[key] = {
+                        seawater: [],
+                        soil: []
+                    };
+                }
+                pointsMap[key].seawater.push({
+                    id: {{ factor.id }},
+                    location: "{{ factor.location_description }}",
+                    temperature: "{{ factor.ocean_temperature|default:'N/A' }}",
+                    salinity: "{{ factor.salinity|default:'N/A' }}"
+                });
+            {% endfor %}
+
+            {% for factor in soil_factors %}
+                var key = "{{ factor.latitude }},{{ factor.longitude }}";
+                if (!pointsMap[key]) {
+                    pointsMap[key] = {
+                        seawater: [],
+                        soil: []
+                    };
+                }
+                pointsMap[key].soil.push({
+                    id: {{ factor.id }},
+                    location: "{{ factor.location_description }}",
+                    organic_carbon: "{{ factor.average_organic_carbon|default:'N/A' }}",
+                    total_carbon: "{{ factor.average_total_carbon|default:'N/A' }}"
+                });
+            {% endfor %}
+
+            // 遍历所有点位，根据是否重叠创建不同的标记
+            for (var key in pointsMap) {
+                var coords = key.split(',').map(Number);
+                var point = pointsMap[key];
+                var hasSeawater = point.seawater.length > 0;
+                var hasSoil = point.soil.length > 0;
+
+                // 根据点的类型决定颜色和弹出内容
+                var color, html, popupContent;
+
+                if (hasSeawater && hasSoil) {
+                    // 重叠点 - 使用紫色
+                    color = '#9333EA'; // Tailwind's purple-600
+                    html = '<div style="background-color: ' + color + '; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white;"></div>';
+
+                    // 创建包含两种类型数据的弹出内容
+                    popupContent = '<div class="popup-content">' +
+                        '<div class="seawater-section mb-2">' +
+                        '<strong class="text-blue-600">Seawater Factors</strong><br>';
+
+                    point.seawater.forEach(function(factor) {
+                        popupContent += 'Temperature: ' + factor.temperature + '°C<br>' +
+                            'Salinity: ' + factor.salinity + ' PSU<br>' +
+                            '<a href="/factors/seawater/' + factor.id + '/" class="text-blue-600 hover:underline">View Seawater Details</a><br>';
+                    });
+
+                    popupContent += '</div><div class="soil-section">' +
+                        '<strong class="text-amber-600">Soil Factors</strong><br>';
+
+                    point.soil.forEach(function(factor) {
+                        popupContent += 'Organic Carbon: ' + factor.organic_carbon + '%<br>' +
+                            'Total Carbon: ' + factor.total_carbon + '%<br>' +
+                            '<a href="/factors/soil/' + factor.id + '/" class="text-amber-600 hover:underline">View Soil Details</a>';
+                    });
+
+                    popupContent += '</div></div>';
+                } else if (hasSeawater) {
+                    // 仅海水点 - 使用蓝色
+                    color = '#3B82F6';
+                    html = '<div style="background-color: ' + color + '; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>';
+
+                    // 创建海水数据的弹出内容
+                    var factor = point.seawater[0];
+                    popupContent = '<strong>Seawater Factor</strong><br>' +
+                        'Location: ' + factor.location + '<br>' +
+                        'Temperature: ' + factor.temperature + '°C<br>' +
+                        'Salinity: ' + factor.salinity + ' PSU<br>' +
+                        '<a href="/factors/seawater/' + factor.id + '/" class="text-blue-600 hover:underline">View Details</a>';
+                } else {
+                    // 仅土壤点 - 使用琥珀色
+                    color = '#D97706';
+                    html = '<div style="background-color: ' + color + '; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>';
+
+                    // 创建土壤数据的弹出内容
+                    var factor = point.soil[0];
+                    popupContent = '<strong>Soil Factor</strong><br>' +
+                        'Location: ' + factor.location + '<br>' +
+                        'Organic Carbon: ' + factor.organic_carbon + '%<br>' +
+                        'Total Carbon: ' + factor.total_carbon + '%<br>' +
+                        '<a href="/factors/soil/' + factor.id + '/" class="text-amber-600 hover:underline">View Details</a>';
+                }
+
+                // 创建标记
+                L.marker(coords, {
+                    icon: L.divIcon({
+                        className: 'custom-div-icon',
+                        html: html,
+                        iconSize: hasSeawater && hasSoil ? [14, 14] : [12, 12],
+                        iconAnchor: hasSeawater && hasSoil ? [7, 7] : [6, 6]
+                    })
+                }).addTo(map)
+                  .bindPopup(popupContent);
+            }
+
+            // 自动调整地图视图以包含所有标记
+            var group = new L.featureGroup([searchMarker, circle]);
+            map.fitBounds(group.getBounds());
+        {% endif %}
+    });
+
+    // 优化距离滑块更新函数
+    function updateDistanceValue(val) {
+        const distanceElement = document.getElementById('distanceValue');
+        if (distanceElement) {
+            distanceElement.textContent = val + ' km';
+        }
+    }
+</script>
+{% endblock %}

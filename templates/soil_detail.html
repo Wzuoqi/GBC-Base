@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block Part1 %}
+<div class="bg-gray-50 min-h-screen">
+    <!-- 顶部导航 -->
+    <div class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="{% url 'factors' %}" class="inline-flex items-center text-horizon-600 hover:text-horizon-700">
+                            <span class="icon-[carbon--arrow-left] w-5 h-5 mr-2"></span>
+                            Back to Factors
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <!-- 标题部分 -->
+            <div class="px-4 py-5 sm:px-6 bg-gradient-to-r from-amber-50 to-amber-100">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Soil Environmental Factors</h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500">Details for location {{ factor.location_description }}</p>
+                    </div>
+                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                        <span class="icon-[carbon--location] w-5 h-5"></span>
+                        <span>{{ factor.latitude }}, {{ factor.longitude }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 地图显示 -->
+            <div class="border-t border-gray-200">
+                <div id="map" class="h-64 w-full"></div>
+            </div>
+
+            <!-- 详细信息 -->
+            <div class="border-t border-gray-200">
+                <dl>
+                    <!-- 有机碳参数 -->
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Organic Carbon</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.average_organic_carbon|default:"Not available" }}%</dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Organic Carbon Depth Range</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.organic_carbon_depth_range }}</dd>
+                    </div>
+
+                    <!-- 总碳参数 -->
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Total Carbon</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.average_total_carbon|default:"Not available" }}%</dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Total Carbon Depth Range</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.total_carbon_depth_range }}</dd>
+                    </div>
+
+                    <!-- 有机物参数 -->
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Organic Matter</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.average_organic_matter|default:"Not available" }}%</dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Organic Matter Depth Range</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.organic_matter_depth_range }}</dd>
+                    </div>
+
+                    <!-- 碳与有机物比率 -->
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Carbon to Organic Matter Ratio</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.carbon_to_organic_matter_ratio|default:"Not available" }}</dd>
+                    </div>
+
+                    <!-- 土壤碳分类 -->
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Soil Carbon Category</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            {% if factor.soil_carbon_category == "Very Low" %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                    Very Low
+                                </span>
+                            {% elif factor.soil_carbon_category == "Low" %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                    Low
+                                </span>
+                            {% elif factor.soil_carbon_category == "Medium" %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                    Medium
+                                </span>
+                            {% elif factor.soil_carbon_category == "High" %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    High
+                                </span>
+                            {% elif factor.soil_carbon_category == "Very High" %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                                    Very High
+                                </span>
+                            {% else %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                    {{ factor.soil_carbon_category }}
+                                </span>
+                            {% endif %}
+                        </dd>
+                    </div>
+
+                    <!-- 元数据 -->
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Last Updated</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ factor.updated_at|date:"F j, Y, g:i a" }}</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 地图脚本 -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化地图
+        var map = L.map('map').setView([{{ factor.latitude }}, {{ factor.longitude }}], 10);
+
+        // 添加地图图层
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // 添加标记
+        L.marker([{{ factor.latitude }}, {{ factor.longitude }}])
+            .addTo(map)
+            .bindPopup("<strong>Soil Factor</strong><br>{{ factor.location_description }}")
+            .openPopup();
+    });
+</script>
+{% endblock %}

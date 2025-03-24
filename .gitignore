@@ -46,7 +46,6 @@ htmlcov/
 node_modules/
 */node_modules/
 **/node_modules/
-InsectSymbiontDB/node_modules/
 
 # Tailwind
 jstoolchain/
