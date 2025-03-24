@@ -236,38 +236,11 @@
                     </div>
                 </div>
 
-                <!-- Factor 下拉菜单 -->
-                <div class="relative" data-dropdown>
-                    <button type="button" data-dropdown-button class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 px-3 py-1.5 bg-white shadow-sm rounded-lg hover:shadow-md transition-shadow">
-                        <span class="icon-[material-symbols--eco-outline] w-4 h-4 text-horizon-600 mr-1"></span>
-                        Factor
-                        <svg class="h-4 w-4 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                    <div data-dropdown-menu
-                        class="absolute hidden left-1/2 z-10 mt-3 w-64 -translate-x-1/2 transform px-2 sm:px-0">
-                        <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                            <div class="relative grid gap-4 bg-white px-4 py-4 sm:gap-6 sm:p-6">
-                                <a href="/factors"
-                                    class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
-                                    <div class="ml-3">
-                                        <p class="text-sm font-medium text-gray-900">Soil factors</p>
-                                        <p class="mt-1 text-xs text-gray-500">Browse literature associated with insect
-                                            symbionts</p>
-                                    </div>
-                                </a>
-                                <a href="/factors"
-                                    class="-m-2 flex items-start rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50">
-                                    <div class="ml-3">
-                                        <p class="text-sm font-medium text-gray-900">Seawater factors</p>
-                                        <p class="mt-1 text-xs text-gray-500">Access external resources</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Factor 按钮 - 修改这部分 -->
+                <a href="/factors" class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 px-3 py-1.5 bg-white shadow-sm rounded-lg hover:shadow-md transition-shadow">
+                    <span class="icon-[material-symbols--eco-outline] w-4 h-4 text-horizon-600 mr-1"></span>
+                    Factor
+                </a>
 
                 <!-- Modal Component -->
                 <div id="modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
