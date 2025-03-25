@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'soil_factor',
     'virus',
     'microbe',
+    'feedback',
 ]
 
 MIDDLEWARE = [

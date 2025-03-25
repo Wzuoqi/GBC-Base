@@ -42,6 +42,9 @@ urlpatterns = [
     # virus
     path('virus/', include('virus.urls')),
 
+    # contact
+    path('contact/', include('feedback.urls')),
+
     # factors
     path('factors/', views.factors, name="factors"),
     path('factors/seawater/<int:factor_id>/', views.seawater_detail, name='seawater_detail'),
