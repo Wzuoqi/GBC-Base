@@ -45,7 +45,7 @@
                             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <div id="product-menu" class="absolute inset-x-0 top-0 -z-10 hidden bg-white pt-10 shadow-lg ring-1 ring-gray-900/5">
+                    <div id="product-menu" class="absolute inset-x-0 top-full z-50 hidden bg-white shadow-lg ring-1 ring-gray-900/5">
                         <div class="mx-auto grid max-w-7xl grid-cols-4 gap-x-6 px-6 py-8 lg:px-8 xl:gap-x-8">
                             <div class="group relative flex items-center rounded-lg p-4 text-sm leading-6 hover:bg-horizon-50 border-b border-horizon-100">
                                 <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
@@ -64,7 +64,7 @@
                                     <span class="icon-[streamline--bacteria-virus-cells-biology] h-6 w-6 text-gray-600 group-hover:text-horizon-600"></span>
                                 </div>
                                 <div class="ml-4">
-                                    <a href="/" class="block font-semibold text-gray-900">
+                                    <a href="/microbe" class="block font-semibold text-gray-900">
                                         Functional Microbe
                                         <span class="absolute inset-0"></span>
                                     </a>
@@ -88,7 +88,7 @@
                                     <span class="icon-[ic--baseline-biotech] h-7 w-7 text-gray-600 group-hover:text-horizon-600"></span>
                                 </div>
                                 <div class="ml-4">
-                                    <a href="/" class="block font-semibold text-gray-900">
+                                    <a href="/amplicon" class="block font-semibold text-gray-900">
                                         Amplicon
                                         <span class="absolute inset-0"></span>
                                     </a>
@@ -114,32 +114,17 @@
                                         <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20"
                                             fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd"
-                                                d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 012.43 8.326 13.019 13.019 0 012 5V3.5z"
-                                                clip-rule="evenodd" />
+                                                d="M10 3c-4.31 0-8 3.033-8 7 0 2.024.978 3.825 2.499 5.085a3.478 3.478 0 01-.522 1.756.75.75 0 00.584 1.143 5.976 5.976 0 003.936-1.108c.487.082.99.124 1.503.124 4.31 0 8-3.033 8-7s-3.69-7-8-7zm0 8a1 1 0 100-2 1 1 0 000 2zm-2-1a1 1 0 11-2 0 1 1 0 012 0zm5 1a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
                                         </svg>
                                         Contact Us
                                     </a>
-                                    <!-- <a href="/cite"
+                                    <button onclick="showCitation()"
                                         class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
-                                        <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20"
-                                            fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd"
-                                                d="M2.5 3A1.5 1.5 0 001 4.5v4A1.5 1.5 0 002.5 10h6A1.5 1.5 0 0010 8.5v-4A1.5 1.5 0 008.5 3h-6zm11 2A1.5 1.5 0 0012 6.5v7a1.5 1.5 0 001.5 1.5h4a1.5 1.5 0 001.5-1.5v-7A1.5 1.5 0 0017.5 5h-4zm-10 7A1.5 1.5 0 002 13.5v2A1.5 1.5 0 003.5 17h6a1.5 1.5 0 001.5-1.5v-2A1.5 1.5 0 009.5 12h-6z"
-                                                clip-rule="evenodd" />
+                                        <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
                                         </svg>
-                                        Cite database
-                                    </a> -->
-                                    <a href="javascript:void(0)" onclick="showModal()"
-                                        class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
-                                        <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20"
-                                            fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd"
-                                                d="M2.5 3A1.5 1.5 0 001 4.5v4A1.5 1.5 0 002.5 10h6A1.5 1.5 0 0010 8.5v-4A1.5 1.5 0 008.5 3h-6zm11 2A1.5 1.5 0 0012 6.5v7a1.5 1.5 0 001.5 1.5h4a1.5 1.5 0 001.5-1.5v-7A1.5 1.5 0 0017.5 5h-4zm-10 7A1.5 1.5 0 002 13.5v2A1.5 1.5 0 003.5 17h6a1.5 1.5 0 001.5-1.5v-2A1.5 1.5 0 009.5 12h-6z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-
-                                        Cite Database
-                                    </a>
+                                        Cite GBC-Base
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -158,7 +143,7 @@
                             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <div data-dropdown-menu class="absolute hidden left-1/2 z-10 mt-3 w-64 -translate-x-1/2 transform px-2 sm:px-0 transition-all duration-200 ease-in-out">
+                    <div data-dropdown-menu class="absolute hidden left-1/2 z-50 top-full mt-1 w-64 -translate-x-1/2 transform px-2 sm:px-0 transition-all duration-200 ease-in-out">
                         <div class="overflow-hidden rounded-lg shadow-lg border border-horizon-100">
                             <div class="relative grid gap-4 bg-white px-4 py-4 sm:gap-6 sm:p-6 rounded-lg">
                                 <a href="/"
@@ -207,8 +192,7 @@
                             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <div data-dropdown-menu
-                        class="absolute hidden left-1/2 z-10 mt-3 w-64 -translate-x-1/2 transform px-2 sm:px-0">
+                    <div data-dropdown-menu class="absolute hidden left-1/2 z-50 top-full mt-1 w-64 -translate-x-1/2 transform px-2 sm:px-0">
                         <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                             <div class="relative grid gap-4 bg-white px-4 py-4 sm:gap-6 sm:p-6">
                                 <a href="/"
@@ -243,41 +227,43 @@
                 </a>
 
                 <!-- Modal Component -->
-                <div id="modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
-                    <div class="relative bg-kabuli-800 rounded-lg p-4 max-w-screen-md w-full">
-                        <div class="absolute top-4 left-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" aria-hidden="true"
-                                class="mt-px h-6 w-6">
-                                <path fill-rule="evenodd"
-                                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
+                <div id="citationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center" style="z-index: 9999;">
+                    <div class="bg-white rounded-lg max-w-2xl w-full mx-4 overflow-hidden shadow-xl transform transition-all relative" style="z-index: 10000;">
+                        <!-- 弹窗头部 -->
+                        <div class="bg-gradient-to-r from-horizon-600 to-horizon-700 px-6 py-4 flex justify-between items-center">
+                            <div class="flex items-center space-x-2">
+                                <svg class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-white">How to Cite GBC-Base</h3>
+                            </div>
+                            <button onclick="hideCitation()" class="text-white hover:text-gray-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
                         </div>
-                        <div class="ml-8 mr-12">
-                            <div class="flex items-center">
-                                <h5 class="text-xl font-semibold text-white">Cite database</h5>
-                                <button id="copyButton" onclick="copyToClipboard()"
-                                    class="group relative ml-4 p-2 text-white hover:text-gray-300 rounded-lg hover:bg-white/10 transition-colors">
-                                    <span class="h-6 w-6 icon-[ion--copy-outline]"></span>
-                                    <!-- Tooltip -->
-                                    <span id="tooltipText" class="absolute -top-8 left-1/2 -translate-x-1/2 hidden group-hover:block
-                                        bg-gray-900 text-white text-xs py-1 px-2 rounded whitespace-nowrap">
-                                        Copy to clipboard
-                                    </span>
+
+                        <!-- 弹窗内容 -->
+                        <div class="p-6 space-y-4">
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div class="text-sm text-gray-600 mb-4">
+                                    Please use the following citation when referencing GBC-Base:
+                                </div>
+                                <div id="citationText" class="text-gray-800 font-mono text-sm leading-relaxed">
+                                    Author, A., Author, B., & Author, C. (2024). GBC-Base: A comprehensive database for global blue carbon research. Database Journal, 1(1), 1-10. https://doi.org/10.1000/journal.2024
+                                </div>
+                            </div>
+
+                            <!-- 复制按钮 -->
+                            <div class="flex justify-end">
+                                <button onclick="copyCitation()" id="copyButton" class="inline-flex items-center px-4 py-2 bg-horizon-600 text-white rounded-lg hover:bg-horizon-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-horizon-500 transition-colors">
+                                    <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                    </svg>
+                                    <span id="copyButtonText">Copy Citation</span>
                                 </button>
                             </div>
-                            <p id="citation-text" class="mt-2 text-base text-white">
-                                Author1, Author2, et al. (2024). InsectSymbiontBase: A comprehensive database for insect
-                                symbionts. Journal,
-                                Volume(Issue), pages. DOI: 10.1093/journal/xxx (test)
-                            </p>
-                        </div>
-                        <div onclick="hideModal()"
-                            class="absolute top-3 right-3 w-max rounded-lg transition-all hover:bg-white hover:bg-opacity-20 cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24"
-                                stroke="white" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
                         </div>
                     </div>
                 </div>
@@ -406,7 +392,7 @@
                                         Us</a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" onclick="showModal()"
+                                    <a href="javascript:void(0)" onclick="showCitation()"
                                         class="text-sm leading-6 text-gray-300 hover:text-white">Cite Us</a>
                                 </li>
                             </ul>
@@ -422,94 +408,107 @@
         </div>
     </footer>
     <script>
-        function showModal() {
-            document.getElementById('modal').classList.remove('hidden');
+        function showCitation() {
+            const modal = document.getElementById('citationModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
 
-        function hideModal() {
-            document.getElementById('modal').classList.add('hidden');
+        function hideCitation() {
+            const modal = document.getElementById('citationModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
-        // Copy text to clipboard
-        function copyToClipboard() {
-            const text = document.getElementById('citation-text').innerText;
-            const button = document.getElementById('copyButton');
-            const tooltip = document.getElementById('tooltipText');
+        async function copyCitation() {
+            const citationText = document.getElementById('citationText').textContent.trim();
+            const copyButton = document.getElementById('copyButton');
+            const copyButtonText = document.getElementById('copyButtonText');
+            const originalButtonClass = copyButton.className;
 
-            // 检查是否支持 Clipboard API
-            if (navigator.clipboard && window.isSecureContext) {
-                // 使用现代的 Clipboard API
-                navigator.clipboard.writeText(text).then(() => {
-                    showCopySuccess();
-                }).catch(() => {
-                    // 如果 Clipboard API 失败，尝试后备方案
-                    if (fallbackCopyToClipboard(text)) {
-                        showCopySuccess();
-                    } else {
-                        showCopyError();
-                    }
-                });
-            } else {
-                // 直接使用后备方案
-                if (fallbackCopyToClipboard(text)) {
-                    showCopySuccess();
+            // 尝试复制文本
+            try {
+                let success = false;
+
+                // 首先尝试使用 Clipboard API
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(citationText);
+                    success = true;
                 } else {
-                    showCopyError();
+                    // 后备方案：使用传统的 execCommand 方法
+                    success = fallbackCopyToClipboard(citationText);
                 }
+
+                if (success) {
+                    // 复制成功的反馈
+                    copyButton.className = 'inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg transition-colors';
+                    copyButtonText.textContent = 'Copied!';
+                } else {
+                    throw new Error('Copy failed');
+                }
+
+            } catch (err) {
+                // 复制失败的反馈
+                copyButton.className = 'inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg transition-colors';
+                copyButtonText.textContent = 'Failed to copy';
+                console.error('Failed to copy text: ', err);
             }
-        }
 
-        // 显示复制成功的视觉反馈
-        function showCopySuccess() {
-            const button = document.getElementById('copyButton');
-            const tooltip = document.getElementById('tooltipText');
-
-            tooltip.textContent = 'Copied!';
-            button.classList.add('text-green-400');
-
+            // 2秒后恢复按钮原始状态
             setTimeout(() => {
-                tooltip.textContent = 'Copy to clipboard';
-                button.classList.remove('text-green-400');
-            }, 2000);
-        }
-
-        // 显示复制失败的视觉反馈
-        function showCopyError() {
-            const button = document.getElementById('copyButton');
-            const tooltip = document.getElementById('tooltipText');
-
-            tooltip.textContent = 'Failed to copy';
-            button.classList.add('text-red-400');
-
-            setTimeout(() => {
-                tooltip.textContent = 'Copy to clipboard';
-                button.classList.remove('text-red-400');
+                copyButton.className = originalButtonClass;
+                copyButtonText.textContent = 'Copy Citation';
             }, 2000);
         }
 
         // 后备复制方案
         function fallbackCopyToClipboard(text) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-
-            // 将文本域移出可视区域
-            textArea.style.position = 'fixed';
-            textArea.style.top = '0';
-            textArea.style.left = '-9999px';
-            textArea.style.opacity = '0';
-
-            document.body.appendChild(textArea);
-
             try {
+                // 创建临时文本区域
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+
+                // 设置样式使其不可见
+                textArea.style.position = 'fixed';
+                textArea.style.top = '0';
+                textArea.style.left = '0';
+                textArea.style.width = '2em';
+                textArea.style.height = '2em';
+                textArea.style.padding = '0';
+                textArea.style.border = 'none';
+                textArea.style.outline = 'none';
+                textArea.style.boxShadow = 'none';
+                textArea.style.background = 'transparent';
+                textArea.style.opacity = '0';
+
+                document.body.appendChild(textArea);
+                textArea.focus();
                 textArea.select();
+
+                // 执行复制命令
                 const successful = document.execCommand('copy');
                 document.body.removeChild(textArea);
+
                 return successful;
             } catch (err) {
-                document.body.removeChild(textArea);
+                console.error('Fallback: Oops, unable to copy', err);
                 return false;
             }
         }
+
+        // 点击模态框背景关闭
+        document.getElementById('citationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideCitation();
+            }
+        });
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !document.getElementById('citationModal').classList.contains('hidden')) {
+                hideCitation();
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', function () {
             // Catalog 下拉菜单的处理
@@ -577,6 +576,15 @@
             })
         })
     </script>
+    <style>
+        #citationModal {
+            z-index: 9999 !important;
+        }
+
+        #citationModal > div {
+            z-index: 10000 !important;
+        }
+    </style>
     {% block extra_js %}{% endblock %}
 </body>
 

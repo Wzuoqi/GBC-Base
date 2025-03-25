@@ -37,7 +37,7 @@
 
             <!-- 地图显示 -->
             <div class="border-t border-gray-200">
-                <div id="map" class="h-64 w-full"></div>
+                <div id="map" class="h-64 w-full" style="z-index: 0;"></div>
             </div>
 
             <!-- 详细信息 -->
@@ -125,6 +125,19 @@
 <!-- 地图脚本 -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<style>
+    /* 确保地图容器和其子元素的z-index较低 */
+    .leaflet-container {
+        z-index: 0;
+    }
+    .leaflet-control-container {
+        z-index: 1;
+    }
+    .leaflet-popup {
+        z-index: 2;
+    }
+</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
